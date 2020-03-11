@@ -1,27 +1,12 @@
 package dbtest;
 
 import java.sql.*;
-import java.util.Scanner;
 
-
-public class DbTest_Insert {
+public class dbTest_Insert {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		String serialNum = null;
-		String phoneNum = null;
-		String password = null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("시리얼번호 입력: ");
-		serialNum = sc.next();
-		System.out.println("전화번호 입력: ");
-		phoneNum = sc.next();
-		System.out.println("비밀번호 입력: ");
-		password = sc.next();
-		
-		
-		insert(serialNum, phoneNum, password);
+		insert(null, "01023456789","asd1234");
 	}
 		
 		public static void insert(String serialnum, String phonenum, String password1) {

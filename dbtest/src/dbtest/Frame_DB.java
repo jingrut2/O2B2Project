@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@SuppressWarnings("serial")
 public class Frame_DB extends JFrame {
    // 전역변수 사용하기 static String sst = null;
    public Frame_DB() {
@@ -25,7 +26,7 @@ public class Frame_DB extends JFrame {
       
       contentPane.setLayout(null);
       
-      
+      /////////////////////    JTextLabel    ///////////////////////////////////////
       JLabel la1 = new JLabel("회원정보");
       la1.setLocation(320,30);
       la1.setSize(200,20);
@@ -41,7 +42,7 @@ public class Frame_DB extends JFrame {
       la3.setSize(200,20);
       contentPane.add(la3);
       
-      ////////////    JTextArea    /////////////////
+      //////////////////////    JTextArea    //////////////////////////////////////////
       
       
       JTextArea txta1 = new JTextArea();
@@ -61,16 +62,11 @@ public class Frame_DB extends JFrame {
       scroll3.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       scroll3.setBounds(190,410, 300, 100);
       contentPane.add(scroll3);
+          
       
-//      JTextArea txta4 = new JTextArea();
-//      JScrollPane scroll4 = new JScrollPane(txta4);
-//      scroll4.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//      scroll4.setBounds(660,60, 90, 80);
-//      contentPane.add(scroll4);
+      /////////////////////    JButton    //////////////////////////////////////////////
       
-      
-      ////////////    Button    /////////////////
-      
+      //---------------------    불러오기    -------------------------------------------
       JButton btn_selP = new JButton("회원정보");
       btn_selP.setLocation(40,60);
       btn_selP.setSize(120,80);
@@ -78,7 +74,8 @@ public class Frame_DB extends JFrame {
       
       btn_selP.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	 
+        	
+        	txta1.setText("");
             Select_Profile mP = new Select_Profile();
             mP.loadProfile(txta1);
          }
@@ -92,8 +89,9 @@ public class Frame_DB extends JFrame {
       btn_selR.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
 
+        	 txta2.setText("");
         	 Select_RealStudyTime mR = new Select_RealStudyTime();
-             mR.loadProfile(txta2);
+             mR.loadRealStudyTime(txta2);
          }
       });
       
@@ -104,105 +102,121 @@ public class Frame_DB extends JFrame {
       btn_selS.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 
+        	 txta3.setText("");
         	 Select_ScheduleStudyTime mS = new Select_ScheduleStudyTime();
-             mS.loadProfile(txta3);
+             mS.loadScheduleStudytime(txta3);
          }
       });
       
+    //---------------------    데이터 넣기    -------------------------------------------
+      
       JButton btn_insP = new JButton("회원정보 넣기");
-      btn_insP.setLocation(520,60);
-      btn_insP.setSize(120,80);
+      btn_insP.setLocation(510,60);
+      btn_insP.setSize(120,40);
       contentPane.add(btn_insP);
       btn_insP.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	 
-        	String serialNum = null;
-       		String phoneNum = null;
-       		String password = null;
-       		
-        	 Insert_Profile.insert( serialNum, phoneNum, password);
         	
+        	txta1.setText("");
+        	String Insert_pro = "3,01012345673,asd1233";
+         	String[] array = Insert_pro.split(",");
+         	String serialnum = array[0];
+       		String phonenum = array[1];
+       		String password1 = array[2];
+       		
+        	Insert_Profile.insert( serialnum, phonenum, password1, txta1);
          }
       });
       
       JButton btn_insR = new JButton("실제학습 넣기");
-      btn_insR.setLocation(520,150);
-      btn_insR.setSize(120,80);
+      btn_insR.setLocation(510,235);
+      btn_insR.setSize(120,40);
       contentPane.add(btn_insR);
       btn_insR.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 
-        	String serialNum = null;
-     		String studytime = null;
-     		String date = null;
-     		String subject = null;
+        	txta2.setText("");
+        	String Insert_rst = "2,3,2020-02-11,3";
+         	String[] array = Insert_rst.split(",");
+         	String serialnum = array[0];
+       		String studytime = array[1];
+       		String date = array[2];
+       		String subject = array[3];
      		
-        	Insert_RealStudyTime.insert(serialNum, studytime, date, subject);
-
+        	Insert_RealStudyTime.insert(serialnum, studytime, date, subject, txta2);
          }
       });
       
       JButton btn_insS = new JButton("계획학습 넣기");
-      btn_insS.setLocation(520,240);
-      btn_insS.setSize(120,80);
+      btn_insS.setLocation(510,410);
+      btn_insS.setSize(120,40);
       contentPane.add(btn_insS);
       btn_insS.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	
-        	String sst = "2,3,2020-02-11,3";
-        	String[] array = sst.split(",");
+        	txta3.setText("");
+        	String Insert_sst = "2,3,2020-02-11,3";
+        	String[] array = Insert_sst.split(",");
         	String serialNum = array[0];
       		String studytime = array[1];
       		String date = array[2];
       		String subject = array[3];
       		
-         	Insert_ScheduleStudyTime.insert(serialNum, studytime, date, subject);
-
+         	Insert_ScheduleStudyTime.insert(serialNum, studytime, date, subject, txta3);
          }
       });
       
+    //---------------------    데이터 삭제하기    -----------------------------------------
+      
       JButton btn_delP = new JButton("회원정보 삭제");
-      btn_delP.setLocation(645,60);
-      btn_delP.setSize(120,80);
+      btn_delP.setLocation(510,105);
+      btn_delP.setSize(120,40);
       contentPane.add(btn_delP);
       btn_delP.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 
-        	 String delphonenum = null;
-        	 String delpassword = null;S
-        	 Delete_Profile.delete(delphonenum, delpassword);
-
+        	 txta1.setText("");
+        	 String Delete_pro = "01012345673,asd1233";
+        	 String[] array = Delete_pro.split(",");
+        	 String delphonenum = array[0];
+        	 String delpassword = array[1];
+        	 Delete_Profile.delete(delphonenum, delpassword, txta1);
          }
       });
       
       JButton btn_delR = new JButton("실제학습 삭제");
-      btn_delR.setLocation(645,150);
-      btn_delR.setSize(120,80);
+      btn_delR.setLocation(510,280);
+      btn_delR.setSize(120,40);
       contentPane.add(btn_delR);
       btn_delR.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 
-
          }
       });
       
       JButton btn_delS = new JButton("계획학습 삭제");
-      btn_delS.setLocation(645,240);
-      btn_delS.setSize(120,80);
+      btn_delS.setLocation(510,455);
+      btn_delS.setSize(120,40);
       contentPane.add(btn_delS);
       btn_delS.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 
-
+        	txta3.setText("");
+        	String Delete_sst = "2,3,2020-02-11,3";
+         	String[] array = Delete_sst.split(",");
+         	String serialNum = array[0];
+       		String studytime = array[1];
+       		String date = array[2];
+       		String subject = array[3];
+       		
+          	Delete_ScheduleStudyTime.delete(serialNum, studytime, date, subject, txta3);
          }
       });
       
       
-      
-      
-      JButton btn_clr = new JButton("값 초기화");
-      btn_clr.setLocation(650,380);
-      btn_clr.setSize(100,50);
+      JButton btn_clr = new JButton("값 지우기");
+      btn_clr.setLocation(660,60);
+      btn_clr.setSize(100,200);
       contentPane.add(btn_clr);
       btn_clr.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -213,8 +227,8 @@ public class Frame_DB extends JFrame {
       });
       
       JButton btn_exit = new JButton("종료");
-      btn_exit.setLocation(650,450);
-      btn_exit.setSize(100,50);
+      btn_exit.setLocation(660,300);
+      btn_exit.setSize(100,200);
       contentPane.add(btn_exit);
       btn_exit.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -228,209 +242,7 @@ public class Frame_DB extends JFrame {
       
       
    }
-   public static void main(String[] args) {
-      new Frame_DB();
-   }
+//   public static void main(String[] args) {
+//      new Frame_DB();
+//   }
 }
-
-////================= profile 값 가져오기==============================
-//class Profile{
-//	public void loadProfile(JTextArea txtArea) {
-//		String profileval = null;
-//		Connection conn = null;
-//		Statement stmt = null;
-//		ResultSet rs = null;
-//	
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
-//		
-//			stmt = conn.createStatement();
-//		
-//			String sql = "SELECT * FROM profile;";
-//		
-//			rs = stmt.executeQuery(sql);
-//		
-//			while (rs.next()) {
-//				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
-//				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
-//				String serialnum = rs.getString(1);
-//				String phonenum = rs.getString(2);
-//				String password1 = rs.getString(3);
-//		
-//				profileval = serialnum + " / " + phonenum + " / " + password1 + " "+ "\n";
-//				txtArea.append(profileval);
-//				
-//			}
-//	
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		} finally {
-//			try {
-//				if (conn != null && !conn.isClosed()) {
-//					conn.close();
-//				}
-//				if (stmt != null && !stmt.isClosed()) {
-//					stmt.close();
-//				}
-//				if (rs != null && !rs.isClosed()) {
-//					rs.close();
-//				}
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//	}
-//}
-//
-////================= RealStudyTime 값 가져오기==============================
-//class RealStudyTime{
-//	public void loadProfile(JTextArea txtArea) {
-//		String realstudytimeval = null;
-//		Connection conn = null;
-//		Statement stmt = null;
-//		ResultSet rs = null;
-//	
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
-//		
-//			stmt = conn.createStatement();
-//		
-//			String sql = "SELECT * FROM realstudytime;";
-//		
-//			rs = stmt.executeQuery(sql);
-//		
-//			while (rs.next()) {
-//				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
-//				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
-//				String serialnum = rs.getString(1);
-//				String studytime = rs.getString(2);
-//				String date = rs.getString(3);
-//				String subject = rs.getString(4);
-//		
-//				realstudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
-//				txtArea.append(realstudytimeval);
-//				
-//			}
-//	
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		} finally {
-//			try {
-//				if (conn != null && !conn.isClosed()) {
-//					conn.close();
-//				}
-//				if (stmt != null && !stmt.isClosed()) {
-//					stmt.close();
-//				}
-//				if (rs != null && !rs.isClosed()) {
-//					rs.close();
-//				}
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//	}
-//}
-////================= ScheduleStudyTime 값 가져오기==============================
-//class ScheduleStudyTime{
-//	public void loadProfile(JTextArea txtArea) {
-//		String schedulestudytimeval = null;
-//		Connection conn = null;
-//		Statement stmt = null;
-//		ResultSet rs = null;
-//	
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
-//		
-//			stmt = conn.createStatement();
-//		
-//			String sql = "SELECT * FROM realstudytime;";
-//		
-//			rs = stmt.executeQuery(sql);
-//		
-//			while (rs.next()) {
-//				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
-//				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
-//				String serialnum = rs.getString(1);
-//				String studytime = rs.getString(2);
-//				String date = rs.getString(3);
-//				String subject = rs.getString(4);
-//		
-//				schedulestudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
-//				txtArea.append(schedulestudytimeval);
-//				
-//			}
-//	
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		} finally {
-//			try {
-//				if (conn != null && !conn.isClosed()) {
-//					conn.close();
-//				}
-//				if (stmt != null && !stmt.isClosed()) {
-//					stmt.close();
-//				}
-//				if (rs != null && !rs.isClosed()) {
-//					rs.close();
-//				}
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//	}
-//}
-
-////======================== profile Insert 값 넣기===============================
-//
-//class profileInsert{
-//
-//public static void insert(String serialnum, String phonenum, String password1) {
-//	
-//	Connection conn = null;
-//	PreparedStatement pstmt = null;
-//	
-//try {
-//	Class.forName("com.mysql.jdbc.Driver");
-//	conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
-//	
-//	String sql = "INSERT INTO profile VALUES (?,?,?)";
-//	pstmt = conn.prepareStatement(sql);
-//
-//	pstmt.setString(1, serialnum);
-//	pstmt.setString(2, phonenum);
-//	pstmt.setString(3, password1);
-//	
-//	int count = pstmt.executeUpdate();
-//	if (count == 0) {
-//		System.out.println("데이터 입력 실패");
-//	}else {
-//		System.out.println("데이터 입력 성공");
-//	}
-//	
-//	
-//
-//} catch (Exception e) {
-//
-//	e.printStackTrace();
-//
-//} finally {
-//	try {
-//		if (pstmt != null && !pstmt.isClosed()) {
-//			pstmt.close();
-//		}
-//		if (conn != null && !conn.isClosed()) {
-//			conn.close();
-//		}
-//		
-//	} catch (SQLException e) {
-//		e.printStackTrace();
-//	}
-//}
-//}
-//}
-
-

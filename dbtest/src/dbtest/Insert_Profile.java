@@ -5,15 +5,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.swing.JTextArea;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
 public class Insert_Profile {
-	public static void insert(String serialnum, String phonenum, String password1) {
+	public static void insert(String serialnum, String phonenum, String password1, JTextArea txtArea) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3309/o2b2", "root", "1234");
 
 			String sql = "INSERT INTO profile VALUES (?,?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -21,16 +25,23 @@ public class Insert_Profile {
 			pstmt.setString(1, serialnum);
 			pstmt.setString(2, phonenum);
 			pstmt.setString(3, password1);
-
+			
+			txtArea.append("추가되었습니다. \n");
+			
 			int count = pstmt.executeUpdate();
 			if (count == 0) {
 				System.out.println("데이터 입력 실패");
+
 			} else {
 				System.out.println("데이터 입력 성공");
 			}
+		
+		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+			txtArea.append("이미 사용자 데이터가 존재합니다.\n");
 
-		} catch (Exception e) {
 
+		}catch (Exception e) {
+			txtArea.append("입력값을 다시한번 확인해 주세요.\n");
 			e.printStackTrace();
 
 		} finally {

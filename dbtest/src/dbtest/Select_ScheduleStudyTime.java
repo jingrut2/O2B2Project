@@ -9,7 +9,7 @@ import java.sql.Statement;
 import javax.swing.JTextArea;
 
 public class Select_ScheduleStudyTime {
-	public void loadProfile(JTextArea txtArea) {
+	public void loadScheduleStudytime(JTextArea txtArea) {
 		String schedulestudytimeval = null;
 		Connection conn = null;
 		Statement stmt = null;
@@ -17,7 +17,7 @@ public class Select_ScheduleStudyTime {
 	
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3309/o2b2", "root", "1234");
 		
 			stmt = conn.createStatement();
 		
