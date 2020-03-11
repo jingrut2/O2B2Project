@@ -4,27 +4,25 @@ import java.sql.*;
 import java.util.Scanner;
 
 
-public class DbTest_Insert {
+public class DBTest_Delete {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String serialNum = null;
-		String phoneNum = null;
-		String password = null;
+		String delphonenum = null;
+		String delpassword = null;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("시리얼번호 입력: ");
-		serialNum = sc.next();
-		System.out.println("전화번호 입력: ");
-		phoneNum = sc.next();
-		System.out.println("비밀번호 입력: ");
-		password = sc.next();
+		System.out.println("삭제할 전화번호 입력: ");
+		delphonenum = sc.next();
+		System.out.println("삭제할 비밀번호 입력: ");
+		delpassword = sc.next();
 		
 		
-		insert(serialNum, phoneNum, password);
+		
+		delete(delphonenum, delpassword);
 	}
 		
-		public static void insert(String serialnum, String phonenum, String password1) {
+		public static void delete(String delphonenum ,String delpassword ) {
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -33,19 +31,14 @@ public class DbTest_Insert {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/o2b2", "root", "1234");
 			
-			String sql = "INSERT INTO profile VALUES (?,?,?)";
+			String sql = "Delete from profile where phonenum = ? and password1= ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, serialnum);
-			pstmt.setString(2, phonenum);
-			pstmt.setString(3, password1);
+			pstmt.setString(1, delphonenum);
+			pstmt.setString(2, delpassword);
 			
 			int count = pstmt.executeUpdate();
-			if (count == 0) {
-				System.out.println("데이터 입력 실패");
-			}else {
-				System.out.println("데이터 입력 성공");
-			}
+			System.out.println("변경된 row: "+ count);
 			
 			
 
