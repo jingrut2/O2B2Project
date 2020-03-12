@@ -190,7 +190,15 @@ public class Frame_DB extends JFrame {
       contentPane.add(btn_delR);
       btn_delR.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	 
+        	txta2.setText("");
+         	String Delete_rst = "2,3,2020-02-11,3";
+          	String[] array = Delete_rst.split(",");
+          	String serialNum = array[0];
+        	String studytime = array[1];
+        	String date = array[2];
+        	String subject = array[3];
+        		
+           	Delete_ScheduleStudyTime.delete(serialNum, studytime, date, subject, txta2);
          }
       });
       
@@ -243,6 +251,6 @@ public class Frame_DB extends JFrame {
       
    }
 //   public static void main(String[] args) {
-//      new Frame_DB();
+//      Frame_DB m = new Frame_DB();
 //   }
 }

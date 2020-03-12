@@ -24,18 +24,19 @@ public class Delete_Profile {
 		pstmt.setString(1, delphonenum);
 		pstmt.setString(2, delpassword);
 		
-		txtArea.append("삭제되었습니다. \n");
 		
 		int count = pstmt.executeUpdate();
 		if (count == 0) {
 			System.out.println("변경된 row: "+ count);
+			txtArea.append("삭제할 값을 다시한번 확인해 주세요.\n");
+		}else {
+			System.out.println("데이터 입력 성공");
+			txtArea.append("삭제 되었습니다.\n");
 		}
 		
 		
-		
-
 	} catch (Exception e) {
-		txtArea.append("삭제할 값을 다시한번 확인해 주세요.\n");
+		txtArea.append("에러입니다 삭제할 값을 다시한번 확인해 주세요.\n");
 		e.printStackTrace();
 
 	} finally {

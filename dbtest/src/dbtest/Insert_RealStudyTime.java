@@ -25,19 +25,21 @@ public class Insert_RealStudyTime {
 			pstmt.setString(3, date);
 			pstmt.setString(4, subject);
 			
-			txtArea.append("추가되었습니다. \n");
+			
 			
 			int count = pstmt.executeUpdate();
 			if (count == 0) {
 				System.out.println("데이터 입력 실패");
+				txtArea.append("추가할 값을 다시한번 확인해 주세요.\n");
 			} else {
 				System.out.println("데이터 입력 성공");
+				txtArea.append("추가되었습니다. \n");
 			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-
+			txtArea.append("에러입니다 추가할 값을 다시한번 확인해 주세요.\n");
 		} finally {
 			try {
 				if (pstmt != null && !pstmt.isClosed()) {

@@ -26,19 +26,21 @@ public class Insert_Profile {
 			pstmt.setString(2, phonenum);
 			pstmt.setString(3, password1);
 			
-			txtArea.append("추가되었습니다. \n");
+			
 			
 			int count = pstmt.executeUpdate();
 			if (count == 0) {
 				System.out.println("데이터 입력 실패");
+				txtArea.append("추가할 값을 다시한번 확인해 주세요.\n");
 
 			} else {
 				System.out.println("데이터 입력 성공");
+				txtArea.append("추가되었습니다. \n");
 			}
 		
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			txtArea.append("이미 사용자 데이터가 존재합니다.\n");
-
+			e.printStackTrace();
 
 		}catch (Exception e) {
 			txtArea.append("입력값을 다시한번 확인해 주세요.\n");

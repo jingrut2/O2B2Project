@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.swing.JTextArea;
 
-public class Delete_ScheduleStudyTime {
+public class Delete_RealStudyTime {
 public static void delete(String serialnum ,String studytime , String date, String subject, JTextArea txtArea) {
 		
 		Connection conn = null;
