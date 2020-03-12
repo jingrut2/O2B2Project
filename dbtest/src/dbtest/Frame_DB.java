@@ -74,7 +74,7 @@ public class Frame_DB extends JFrame {
       
       btn_selP.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	
+        	      	
         	txta1.setText("");
             Select_Profile mP = new Select_Profile();
             mP.loadProfile(txta1);
@@ -88,7 +88,7 @@ public class Frame_DB extends JFrame {
       
       btn_selR.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-
+        	 
         	 txta2.setText("");
         	 Select_RealStudyTime mR = new Select_RealStudyTime();
              mR.loadRealStudyTime(txta2);
@@ -198,7 +198,7 @@ public class Frame_DB extends JFrame {
         	String date = array[2];
         	String subject = array[3];
         		
-           	Delete_ScheduleStudyTime.delete(serialNum, studytime, date, subject, txta2);
+        	Delete_RealStudyTime.delete(serialNum, studytime, date, subject, txta2);
          }
       });
       
