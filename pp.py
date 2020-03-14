@@ -1,5 +1,6 @@
-import RPi.GPIO as GPIO
+import spidev
 import datetime
+import RPi.GPIO as GPIO
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 import time ,datetime             
@@ -12,7 +13,6 @@ from PIL import ImageFont
 from socket import *
 from select import select
 import sys
-import spidev
 
 import subprocess
 
@@ -21,13 +21,6 @@ import subprocess
 spi = spidev.SpiDev()
 spi.open(0,0)
 spi.max_speed_hz = 100000
-
-
-flag = 0                  
-count = 0
-RealTime = 0
-
-i = 0
 
 
 
@@ -40,7 +33,10 @@ first_time=0
 pa_sw=0
 stop_sw=0
 real_time=0
+count = 0
+RealTime = 0
 
+sub_time =0
 ####### 핀 번호창 #######
 TRIG = 23
 ECHO = 24
@@ -53,13 +49,7 @@ led_A = 21
 led_B = 20
 led_C = 16
 
-########## HOST, PORT #######
 
-
-#######################
-
-
-print("Distance measurement in progress")
 
 ########  설정창 ######
 GPIO.setmode(GPIO.BCM)
@@ -147,7 +137,7 @@ def oled():
             if pa_sw==1:
                 print("oled pause")
                 while True:
-                    time.sleep(1)
+                    time.sleep(0.001)
                     if pa_sw==2:
                         break;
     except KeyboardInterrupt:
@@ -204,7 +194,7 @@ def ultra_sensor_on():
             if pa_sw==1:
                     print("sensor pause")
                     while True:
-                        time.sleep(1)
+                        time.sleep(0.001)
                         if pa_sw==2:
                             break;
             else :
@@ -217,7 +207,7 @@ def ultra_sensor_on():
 
 def stop_sensor():
 
-    time.sleep(2)
+    time.sleep(1)
     global stop_sw
     #여기에서 전체값 보내기####
     while True:
@@ -228,9 +218,11 @@ def stop_sensor():
 ###########pause############
 def pause():
 
+    global sub_time
     global pa_sw
     global stop_sw
-    time.sleep(2)
+    time.sleep(1)
+
     while True:
         if stop_sw==1:
             break
@@ -238,14 +230,15 @@ def pause():
         if GPIO.input(19) == GPIO.HIGH:
             pa_sw+=1
         if pa_sw==1:
+            sub_time = time.time()
             while True:
                 time.sleep(1)
                 if GPIO.input(19) == GPIO.HIGH:
                     pa_sw+=1
                     if pa_sw==2:
-                        
                         time.sleep(2)
                         pa_sw=0
+                        sub_time = time.time() - sub_time
                         break
 
 ##########study_time##############
@@ -287,27 +280,45 @@ def tcp(ttt):
 
 ########LED###########
 
-def light(reading):
+def light():
 
-    r = spi.xfer2([1,(8) << 4,0])
-    reading = ((r[1]&3) << 8) + r[2]
-    voltage = reading * 3.3 / 1024
+    global pa_sw
+    global stop_sw
+    while True:
+        
+        try:
+            time.sleep(1)
+            r = spi.xfer2([1,(8) << 4,0])
+            reading = ((r[1]&3) << 8) + r[2]
+            voltage = reading * 3.3 / 1024
+            print("Reading = %d \n Voltage = %f" %(reading, voltage))
+            
+            if (reading > 350):
+                GPIO.output(led_A,1)
+                GPIO.output(led_B,0)
+                GPIO.output(led_C,0)
+                
+            if ( reading <= 350 and reading > 100 ):
+                GPIO.output(led_A,1)
+                GPIO.output(led_B,1)
+                GPIO.output(led_C,0)
+                
+            if ( reading <= 100):
+                GPIO.output(led_A,1)
+                GPIO.output(led_B,1)
+                GPIO.output(led_C,1)
 
-    if (reading > 350):
-        GPIO.output(led_A,1)
-        GPIO.output(led_B,0)
-        GPIO.output(led_C,0)
-
-    if ( reading <= 350 and reading > 100 ):
-        GPIO.output(led_A,1)
-        GPIO.output(led_B,1)
-        GPIO.output(led_C,0)
-
-    if ( reading <= 100):
-        GPIO.output(led_A,1)
-        GPIO.output(led_B,1)
-        GPIO.output(led_C,1)
-
+            if stop_sw==1:
+                print("light end")
+                break
+            if pa_sw==1:
+                    print("light pause")
+                    while True:
+                        time.sleep(0.001)
+                        if pa_sw==2:
+                            break;
+        except Exception as e:
+            print(e)
 
 #####버튼을 누르면 센서작동###
 
@@ -317,6 +328,7 @@ stop  = Thread(target=stop_sensor,args=())
 pause_sensor = Thread(target=pause, args=())
 LED  = Thread(target=light, args=())
 
+print("Distance measurement in progress")
 while True:
     if GPIO.input(26) == GPIO.HIGH:    
         swich =1                      
@@ -339,6 +351,6 @@ while True:
         LED.join()
 
         if stop_sw==1:
-            tcp(cnt_time)
+            tcp(cnt_time-sub_time)
         break
 
