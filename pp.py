@@ -49,8 +49,6 @@ led_A = 21
 led_B = 20
 led_C = 16
 
-
-
 ########  설정창 ######
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -72,6 +70,32 @@ GPIO.output(led_A,0)
 GPIO.output(led_B,0)
 GPIO.output(led_C,0)
 
+
+########buzer############
+
+def buzer():
+    
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(4,GPIO.OUT)
+    p = GPIO.PWM(4,100)
+    
+    #Frq = [262,294,330,349,392,440,493,452]
+    speed = 0.5
+
+    p.start(10)
+    while True:
+        
+        try:
+            for i in range(0,5):
+                p.ChangeFrequency(452)
+                time.sleep(0.5)
+                p.ChangeFrequency(493)
+                time.sleep(0.5)
+            break
+        except Keyboardinterrupt:  
+            pass
+        p.stop()
 #############oled  ##########
 def oled():
 
@@ -144,7 +168,6 @@ def oled():
         print("oled stop")
         GPIO.cleanup()
 
-###############################################
 
 
 ###########ultira_sensor##################
@@ -152,19 +175,22 @@ def oled():
 
 def ultra_sensor_on():
 
-   
     GPIO.output(TRIG,False)           
     print("waiting for sensor tho settle")   
     global stop_sw
     global pa_sw
     global count 
-    try:         
+    global sub_time
+
+    count_err = 0
+    try:                               
         while True:                    
             GPIO.output(TRIG,True)     
             time.sleep(0.0001)
             GPIO.output(TRIG,False) 
             if count_err > 499:
-                count_err = 0
+                print("Sensor !!!! Error!!")
+            count_err = 0
             while GPIO.input(ECHO) == 0 and count_err < 500:
                 start = time.time() 
                 count_err += 1
@@ -177,12 +203,15 @@ def ultra_sensor_on():
             print("%.1f"%distance)          
             time.sleep(1)
 
-            if distance > 110 and distance<900:    
+            if distance > 120  or distance <0:    
               #count 함수를 불러오기
               count += 1
-              if count > 2*10:
-                  print("ERROR...!!!")
-                  count = 0
+              if count > 5:
+                  print("over rest")
+                  buzer()
+                  stop_sw=1
+                  sub_time = sub_time + 60*10
+                  time.sleep(0.5)
             else :
                 count = 0
 
@@ -194,6 +223,7 @@ def ultra_sensor_on():
                     while True:
                         time.sleep(0.001)
                         if pa_sw==2:
+
                             break;
             else :
                 count_sensor_error =0
@@ -201,7 +231,9 @@ def ultra_sensor_on():
         print("ultra sensor stop")
         GPIO.cleanup()
 
- #############stop##########
+
+
+#############stop##########
 
 def stop_sensor():
 
@@ -209,6 +241,8 @@ def stop_sensor():
     global stop_sw
     #여기에서 전체값 보내기####
     while True:
+        if stop_sw == 1:
+            break
         if GPIO.input(26) == GPIO.HIGH:
             stop_sw=1
             break
@@ -238,19 +272,6 @@ def pause():
                         pa_sw=0
                         sub_time = time.time() - sub_time
                         break
-
-##########study_time##############
-
-def study_time_count():
-
-    count+=1
-
-    if (count == 10):                          
-        print("start")                          
-        GPIO.output(SENSER_OFF,False)           
-        GPIO.output(SENSER_ON,True)             
-
-        RealTime = 0                     
 
 ####### TCP TONGSIN #########
 def tcp(ttt):
@@ -282,15 +303,15 @@ def light():
 
     global pa_sw
     global stop_sw
+
     while True:
         
         try:
-            time.sleep(1)
+            # time.sleep(1) 
             r = spi.xfer2([1,(8) << 4,0])
             reading = ((r[1]&3) << 8) + r[2]
             voltage = reading * 3.3 / 1024
-            print("Reading = %d \n Voltage = %f" %(reading, voltage))
-            
+            # print("Reading = %d \n Voltage = %f" %(reading, voltage))
             if (reading > 350):
                 GPIO.output(led_A,1)
                 GPIO.output(led_B,0)
@@ -305,18 +326,22 @@ def light():
                 GPIO.output(led_A,1)
                 GPIO.output(led_B,1)
                 GPIO.output(led_C,1)
-
+            
+            
             if stop_sw==1:
                 print("light end")
                 break
+            
             if pa_sw==1:
-                    print("light pause")
-                    while True:
-                        time.sleep(0.001)
-                        if pa_sw==2:
-                            break;
+                print("light pause")
+                while True:
+                    time.sleep(0.001)
+                    if pa_sw==2:
+                        break
+                    
         except Exception as e:
             print(e)
+
 
 #####버튼을 누르면 센서작동###
 
@@ -336,6 +361,7 @@ while True:
 while True:
     if swich == 1 :
         first_time = time.time()
+
         oledsensor.start()
         ultra_on.start()
         stop.start() 
@@ -349,6 +375,7 @@ while True:
         LED.join()
 
         if stop_sw==1:
-            tcp(cnt_time-sub_time)
-        break
+            print((cnt_time - sub_time)/60)
+            #tcp(cnt_time-sub_time)
+            break
 
