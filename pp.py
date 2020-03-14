@@ -152,20 +152,19 @@ def oled():
 
 def ultra_sensor_on():
 
+   
     GPIO.output(TRIG,False)           
     print("waiting for sensor tho settle")   
     global stop_sw
     global pa_sw
-
-    count_err = 0
-    try:                               
+    global count 
+    try:         
         while True:                    
             GPIO.output(TRIG,True)     
             time.sleep(0.0001)
             GPIO.output(TRIG,False) 
             if count_err > 499:
-                print("Sensor !!!! Error!!")
-            count_err = 0
+                count_err = 0
             while GPIO.input(ECHO) == 0 and count_err < 500:
                 start = time.time() 
                 count_err += 1
@@ -178,11 +177,10 @@ def ultra_sensor_on():
             print("%.1f"%distance)          
             time.sleep(1)
 
-            if distance > 150:    
+            if distance > 110 and distance<900:    
               #count 함수를 불러오기
-              global count 
               count += 1
-              if count > 10:
+              if count > 2*10:
                   print("ERROR...!!!")
                   count = 0
             else :
