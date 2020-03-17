@@ -42,7 +42,7 @@ class Rasp_Socket_Thread {
 			InetAddress inetaddr = sock.getInetAddress();
 			isInterrupt = false;
 
-			System.out.println(inetaddr.getHostAddress() + " 로부터 접속했습니다.");
+			System.out.println("Raspberry Pi : "+inetaddr.getHostAddress() + " 로부터 접속했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

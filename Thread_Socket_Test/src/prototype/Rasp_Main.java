@@ -29,6 +29,7 @@ class Rasp_Main extends Thread {
 
 				//싱글톤 추가부분================================
 				SIngleTon_Test s = SIngleTon_Test.getInstance();
+				Frame mFrame = Frame.getInstance();
 				s.readData_singleTon = readData;
 				
 //				Frame mFrame = new Frame();
@@ -36,13 +37,14 @@ class Rasp_Main extends Thread {
 			
 				System.out.println("클라이언트에서 받아온 값 : " + readData);
 				System.out.println("싱글톤 테스트 값 : " + s.readData_singleTon);
+				mFrame.txta1.append("Get Rasp Client : " + readData + "\n");
 				String sendmsg = readData;
 				// 클라이언트에 값을 보내는 구분
 				mRasp_Socket_Thread.write("send : " + sendmsg);
 				
 				
-				SocketThread mSocketThread = SocketThread.get();
-				mSocketThread.write("Rasp to Server: " +readData);
+//				SocketThread mSocketThread = SocketThread.get();
+//				mSocketThread.write("Rasp to Server: " +readData);
 			}
 
 		} catch (Exception e) {

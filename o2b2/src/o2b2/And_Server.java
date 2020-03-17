@@ -32,7 +32,7 @@ class And_Server extends Thread {
 					And_Login mlogin = And_Login.getInstance();
 					mlogin.login_start();
 				} else if (readData.contentEquals("2")) { // 회원가입 버튼"2"
-
+//					And_SingUp mSingup = And_SingUp.getInstacne();
 				}
 
 			}

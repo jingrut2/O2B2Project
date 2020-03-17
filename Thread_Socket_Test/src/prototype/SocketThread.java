@@ -41,7 +41,7 @@ class SocketThread {
 			InetAddress inetaddr = sock.getInetAddress();
 			isInterrupt = false;
 
-			System.out.println(inetaddr.getHostAddress() + " 로부터 접속했습니다.");
+			System.out.println("Android App : "+inetaddr.getHostAddress() + " 로부터 접속했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,11 +89,19 @@ class SocketThread_Read extends Thread {
 			//&& !mSocketThread.sock.isClosed() 조건을 넣어준다.
 			while (!mSocketThread.isInterrupt && !mSocketThread.sock.isClosed()) {
 				String readMsg = br.readLine();
+				// 튕겼을 때 null연속 탈출
+				if (readMsg == null) {
+					break;
+				}
+				//
 				mSocketThread.mRead_Queue.add(readMsg);
-				mFrame.txta1.append(readMsg + "\n");
+				mFrame.txta1.append("Get Android App Client : " + readMsg + "\n");
+				mFrame.txta1.setCaretPosition(mFrame.txta1.getDocument().getLength());
+				
+				
 				System.out.println("queue add : " + readMsg);
 				Thread.sleep(100);
-			}
+			}mFrame.txta1.append("\n");
 
 		} catch (Exception e) {
 

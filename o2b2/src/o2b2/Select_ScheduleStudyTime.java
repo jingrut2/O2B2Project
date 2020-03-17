@@ -13,7 +13,6 @@ public class Select_ScheduleStudyTime {
 		
 		SingleTon s =SingleTon.getInstanse();
 		
-		String schedulestudytimeval = null;
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -32,13 +31,13 @@ public class Select_ScheduleStudyTime {
 				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
 				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
 				String serialnum = rs.getString(1);
-				s.InsertScheduleserialnum_singleTon.add(rs.getString(1));
+				s.SelectScheduleserialnum_singleTon.add(rs.getString(1));
 				String studytime = rs.getString(2);
-				s.InsertSchedulestudytime_singleTon.add(rs.getString(2));
+				s.SelectSchedulestudytime_singleTon.add(rs.getString(2));
 				String date = rs.getString(3);
-				s.InsertScheduledate_singleTon.add(rs.getString(3));
+				s.SelectScheduledate_singleTon.add(rs.getString(3));
 				String subject = rs.getString(4);
-				s.InsertSchedulesubject_singleTon.add(rs.getString(4));
+				s.SelectSchedulesubject_singleTon.add(rs.getString(4));
 		
 				s.schedulestudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
 				
@@ -88,13 +87,13 @@ public void loadScheduleStudytime(JTextArea txtArea) {
 				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
 				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
 				String serialnum = rs.getString(1);
-				s.InsertScheduleserialnum_singleTon.add(rs.getString(1));
+				s.SelectScheduleserialnum_singleTon.add(rs.getString(1));
 				String studytime = rs.getString(2);
-				s.InsertSchedulestudytime_singleTon.add(rs.getString(2));
+				s.SelectSchedulestudytime_singleTon.add(rs.getString(2));
 				String date = rs.getString(3);
-				s.InsertScheduledate_singleTon.add(rs.getString(3));
+				s.SelectScheduledate_singleTon.add(rs.getString(3));
 				String subject = rs.getString(4);
-				s.InsertSchedulesubject_singleTon.add(rs.getString(4));
+				s.SelectSchedulesubject_singleTon.add(rs.getString(4));
 		
 				schedulestudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
 				txtArea.append(schedulestudytimeval);

@@ -13,18 +13,17 @@ public class SingleTon {
 	ArrayList<String> phonenum_singleTon = new ArrayList<String>();
 	ArrayList<String> password1_singleTon = new ArrayList<String>();
 	
-	ArrayList<String> InsertRealserialnum_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertRealstudytime_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertRealdate_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertRealsubject_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectRealserialnum_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectRealstudytime_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectRealdate_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectRealsubject_singleTon = new ArrayList<String>();
 	
-	ArrayList<String> InsertScheduleserialnum_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertSchedulestudytime_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertScheduledate_singleTon = new ArrayList<String>();
-	ArrayList<String> InsertSchedulesubject_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectScheduleserialnum_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectSchedulestudytime_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectScheduledate_singleTon = new ArrayList<String>();
+	ArrayList<String> SelectSchedulesubject_singleTon = new ArrayList<String>();
 	
 	String raspStudyTime_singleTon = null;
-	
 	String readData_singleTon = null;
 	
 	String profileval = null;
@@ -61,6 +60,14 @@ public class SingleTon {
 	String Delete_rst = null;
 	String Delete_sst = null;
 	
+	ArrayList<Integer> mListGraph = new ArrayList<Integer>();
+	public void setGraph(ArrayList<Integer> graph) {
+		for(int i=0; i< graph.size(); i++)
+		{
+			mListGraph.add(graph.get(i));
+		}
+		
+	}
 	// 싱글톤 패턴에서 생성자를 외부에서 호출할 수 없도록 한다.
 	private SingleTon() {
 	}

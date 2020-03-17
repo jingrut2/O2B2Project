@@ -15,7 +15,7 @@ public class Select_Profile {
 		Statement stmt = null;
 		ResultSet rs = null;
 		
-		// 매개변수 없는  loadProfile
+		// 매개변수 없는  loadProfile 오버로딩
 	public void loadProfile() {
 			//
 		SingleTon s = SingleTon.getInstanse();

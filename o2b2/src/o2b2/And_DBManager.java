@@ -7,6 +7,9 @@ public class And_DBManager {
 	static private And_DBManager mDbManager = null;
 	Connection conn = null;
 	Statement stmt = null;
+	//
+	PreparedStatement pstmt = null;
+	//
 	ResultSet rs = null;
 	int id_index = 0;
 
@@ -73,7 +76,6 @@ public class And_DBManager {
 	boolean ID_Match(String id) {
 		System.out.println("isID 함수 진입");
 		// System.out.println("mPH 사이즈 : " + mPH.size()); //에러 확인용 Print문
-
 		for (int i = 0; i < mPH.size(); i++) {
 			System.out.println("ID_Match 함수 진입");
 			if (mPH.get(i).equals(id)) { // 클라이언트 ID 와 mID ArrayList 를 같을때까지 돌아
@@ -94,6 +96,18 @@ public class And_DBManager {
 			return true;
 		}
 		System.out.println("PW 틀림");
+		return false;
+	}
+	///////////////////////////////////////    회원가입    ////////////////////////////////////
+	boolean Singup_Match(String id) {
+		System.out.println("matchID 함수 진입");
+		for (int i = 0; i < mPH.size(); i++) {
+			if (mPH.get(i).equals(id)) { // 클라이언트 ID 와 mID ArrayList 를 같을때까지 돌아
+
+				System.out.println("ID 겹침");
+				return true;
+			}
+		}
 		return false;
 	}
 

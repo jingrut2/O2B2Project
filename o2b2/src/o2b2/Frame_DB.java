@@ -50,11 +50,11 @@ public class Frame_DB  {
          public void actionPerformed(ActionEvent e) {
         	 s.get_textfield = s.textfield.getText();
         	 System.out.println(s.get_textfield);
+        	 s.txta1.append(s.get_textfield);
         	 //TextField 초기화
         	 s.textfield.setText(null);
          }
       });
-      
       
       /////////////////////    JTextLabel    ///////////////////////////////////////
       JLabel la1 = new JLabel("회원정보");
@@ -280,7 +280,5 @@ public class Frame_DB  {
       
       
    }
-//   public static void main(String[] args) {
-//      Frame_DB m = new Frame_DB();
-//   }
+
 }

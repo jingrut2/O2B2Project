@@ -34,13 +34,13 @@ public void loadRealStudyTime() {
 				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
 				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
 				String serialnum = rs.getString(1);
-				s.InsertRealserialnum_singleTon.add(rs.getString(1));
+				s.SelectRealserialnum_singleTon.add(rs.getString(1));
 				String studytime = rs.getString(2);
-				s.InsertRealstudytime_singleTon.add(rs.getString(2));
+				s.SelectRealstudytime_singleTon.add(rs.getString(2));
 				String date = rs.getString(3);
-				s.InsertRealdate_singleTon.add(rs.getString(3));
+				s.SelectRealdate_singleTon.add(rs.getString(3));
 				String subject = rs.getString(4);
-				s.InsertRealsubject_singleTon.add(rs.getString(4));
+				s.SelectRealsubject_singleTon.add(rs.getString(4));
 		
 				s.realstudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
 				
@@ -92,13 +92,13 @@ public void loadRealStudyTime() {
 				// 레코드의 칼럼은 배열과 달리 0부터 시작하지 않고 1부터 시작한다.
 				// 데이터베이스에서 가져오는 데이터의 타입에 맞게 getString 또는 getInt 등을 호출한다.
 				String serialnum = rs.getString(1);
-				s.InsertRealserialnum_singleTon.add(rs.getString(1));
+				s.SelectRealserialnum_singleTon.add(rs.getString(1));
 				String studytime = rs.getString(2);
-				s.InsertRealstudytime_singleTon.add(rs.getString(2));
+				s.SelectRealstudytime_singleTon.add(rs.getString(2));
 				String date = rs.getString(3);
-				s.InsertRealdate_singleTon.add(rs.getString(3));
+				s.SelectRealdate_singleTon.add(rs.getString(3));
 				String subject = rs.getString(4);
-				s.InsertRealsubject_singleTon.add(rs.getString(4));
+				s.SelectRealsubject_singleTon.add(rs.getString(4));
 		
 				realstudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
 				txtArea.append(realstudytimeval);
