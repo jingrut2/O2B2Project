@@ -35,6 +35,27 @@ public class Frame_DB  {
 
       contentPane.setLayout(null);
       
+      /////////////////////   JTextField  Test    /////////////////////////////
+      s.textfield = new JTextField();
+      s.textfield.setLocation(190, 170);
+      s.textfield.setSize(300, 20);
+      contentPane.add(s.textfield);
+      
+      s.btn_textField = new JButton("회원정보");
+      s.btn_textField.setLocation(40,170);
+      s.btn_textField.setSize(120,20);
+      contentPane.add(s.btn_textField);
+      
+      s.btn_textField.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+        	 s.get_textfield = s.textfield.getText();
+        	 System.out.println(s.get_textfield);
+        	 //TextField 초기화
+        	 s.textfield.setText(null);
+         }
+      });
+      
+      
       /////////////////////    JTextLabel    ///////////////////////////////////////
       JLabel la1 = new JLabel("회원정보");
       la1.setLocation(320,30);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class SingleTon {
 
@@ -33,9 +34,14 @@ public class SingleTon {
 
 	private static SingleTon sel_pro = null;
 	
+	JTextField textfield;
+	JButton btn_textField;
+	String get_textfield = null;
+	
 	JTextArea txta1;
 	JTextArea txta2;
 	JTextArea txta3;
+	
 	JButton btn_selP;
 	JButton btn_selR;
 	JButton btn_selS;
