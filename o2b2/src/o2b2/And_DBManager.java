@@ -40,17 +40,31 @@ public class And_DBManager {
 	}
 
 	int DB_Select_countNum(String sql) { // DB 회원 테이블의 전체 행 갯수(회원 가입 인원 가져오기)
-		int Profile_count = 0;
+		SingleTon s = SingleTon.getInstanse();
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Profile_count = rs.getInt(1);
+				s.Profile_count = rs.getInt(1);
 			}
 		} catch (Exception e) {
 		}
 
-		return Profile_count;
+		return s.Profile_count;
+	}
+	
+	int DB_RealStudyTime_countNum(String sql) { // DB 실제학습시간 테이블의 전체 행 갯수(실제학습시간 갯수 가져오기)
+		SingleTon s = SingleTon.getInstanse();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				s.RealStudyTime_count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+		}
+
+		return s.RealStudyTime_count;
 	}
 
 	/*

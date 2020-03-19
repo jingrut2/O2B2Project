@@ -60,6 +60,10 @@ public class SingleTon {
 	String Delete_rst = null;
 	String Delete_sst = null;
 	
+	int Profile_count = 0;
+	int RealStudyTime_count = 0;
+	
+	
 	ArrayList<Integer> mListGraph = new ArrayList<Integer>();
 	public void setGraph(ArrayList<Integer> graph) {
 		for(int i=0; i< graph.size(); i++)

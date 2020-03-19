@@ -15,7 +15,6 @@ public void loadRealStudyTime() {
 		
 		SingleTon s =SingleTon.getInstanse();
 		
-		String realstudytimeval = null;
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;

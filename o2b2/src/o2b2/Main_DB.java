@@ -14,25 +14,12 @@ public class Main_DB {
 		Rasp_Main mRasp_Main = new Rasp_Main();
 		mRasp_Main.start();
 		
-		new Graph_Test();
-		//그래프 그리기 부분
-		SingleTon mS =SingleTon.getInstanse();
-		ArrayList<Integer> m = new ArrayList<Integer>();
-		m.add(1);
-		m.add(30);
-		m.add(70);
-		m.add(50);
-		m.add(50);
-		m.add(70);
-		m.add(30);
-		m.add(80);
-		m.add(40);
-		m.add(50);
 		
-		mS.setGraph(m);
+		StartSelect mLogin = new StartSelect();
+		mLogin.Login();
 		
-//		StartSelect mLogin = new StartSelect();
-//		mLogin.Login();
+		new Graph_Db();		
+
 //		new App_Socket();
 //		new Raspberry_Socket();
 	}

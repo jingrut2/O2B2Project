@@ -7,6 +7,7 @@ class And_Server extends Thread {
 			And_DBManager mDB = And_DBManager.getInstance();
 			mDB.DB_Join();
 			System.out.println("È¸¿ø ¼ö : " + mDB.DB_Select_countNum("select count(*) From profile"));
+			mDB.DB_RealStudyTime_countNum("select count(*) From realstudytime");
 			mDB.DB_Select_value("select * From profile");
 			
 			And_SocketThread mSocketThread = And_SocketThread.get();

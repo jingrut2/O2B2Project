@@ -35,7 +35,7 @@ public class Frame_DB  {
 
       contentPane.setLayout(null);
       
-      /////////////////////   JTextField  Test    /////////////////////////////
+      /////////////////////   JTextField  Test 값 가져오기    /////////////////////////////
       s.textfield = new JTextField();
       s.textfield.setLocation(190, 170);
       s.textfield.setSize(300, 20);
