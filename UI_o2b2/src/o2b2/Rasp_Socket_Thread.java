@@ -34,7 +34,7 @@ class Rasp_Socket_Thread {
 		try {
 			System.out.println("Join 함수 들어옴.");
 			server = new ServerSocket(8888);
-			System.out.println("Rasp Waiting Connect....");
+			System.out.println("라즈베리파이 연결 기다리는중...");
 
 			sock = server.accept();
 			Rasp_Socket_Thread_Read mRasp_Socket_Thread_Read = new Rasp_Socket_Thread_Read();
@@ -42,7 +42,7 @@ class Rasp_Socket_Thread {
 			InetAddress inetaddr = sock.getInetAddress();
 			isInterrupt = false;
 
-			System.out.println(inetaddr.getHostAddress() + " 로부터 접속했습니다.");
+			System.out.println("라즈베리파이 IP : "+ inetaddr.getHostAddress() + " 로부터 접속했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

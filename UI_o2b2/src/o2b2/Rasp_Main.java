@@ -1,10 +1,17 @@
 package o2b2;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 class Rasp_Main extends Thread {
 
 	public void run() {
+		
+////	현재 날짜를 가져오는 부분
+	SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+	
+	Calendar time = Calendar.getInstance();
+		
 		super.run();
 		try {
 			while (true) {
@@ -37,6 +44,18 @@ class Rasp_Main extends Thread {
 				System.out.println("클라이언트에서 받아온 값 : " + readData);
 				System.out.println("싱글톤 테스트 값 : " + s.readData_singleTon);
 				String sendmsg = readData;
+				//라즈베리파이에서 들어온 값을 데이터베이스에 저장하는 부분
+				String[] array = s.readData_singleTon.split("/");
+				String serialnum = array[0];
+				System.out.println(serialnum);
+				String studytime = array[1];
+				System.out.println(studytime);
+				String date = format1.format(time.getTime());
+				System.out.println(date);
+				String subject = "0";
+				Insert_RealStudyTime.insert(serialnum, studytime, date, subject);
+				
+				
 				// 클라이언트에 값을 보내는 구분
 				mRasp_Socket_Thread.write("send : " + sendmsg);
 				

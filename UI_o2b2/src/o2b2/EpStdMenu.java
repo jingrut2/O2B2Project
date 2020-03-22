@@ -39,10 +39,11 @@ class JPanel03 extends JPanel {
 
 	private JScrollPane jScrollPane1;
 	private JTextArea jTextArea1;
-
+	JComboBox<String> c = new JComboBox();
+	
 	void makeCombo() { // select 박스
 
-		JComboBox<String> c = new JComboBox();
+		
 		c.setSize(500, 40);
 		c.setLocation(200, 385);
 //		c.addItem("data1"); // 데이터값 넣기
@@ -169,7 +170,6 @@ SingleTon s =SingleTon.getInstanse();
 					System.out.println(s.get_textfield_schedulestudy);
 					jTextArea1.append(s.get_textfield_schedulestudy+"\n");
 					jtextfield1.setText(null);					
-//	        	 s.Insert_sst = "2,3,2020-02-11,3";
 					String[] array = s.get_textfield_schedulestudy.split("/");
 					String serialNum = array[0];
 					String studytime = array[1];
@@ -177,7 +177,7 @@ SingleTon s =SingleTon.getInstanse();
 					String subject = array[3];
 
 					Insert_ScheduleStudyTime.insert(serialNum, studytime, date, subject, jTextArea1);
-
+					c.addItem(s.get_textfield_schedulestudy);
 				} catch (Exception e2) {
 					// TODO: handle exception
 					jTextArea1.append("실패했습니다. 값을 다시 한번 확인해 주세요.");
@@ -203,6 +203,7 @@ SingleTon s =SingleTon.getInstanse();
 	       		String subject = array[3];
 	       		
 	          	Delete_ScheduleStudyTime.delete(serialNum, studytime, date, subject, jTextArea1);
+	          	c.removeItem(s.Delete_sst);
 	         }
 	      });
 		//

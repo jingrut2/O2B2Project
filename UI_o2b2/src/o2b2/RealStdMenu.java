@@ -33,14 +33,12 @@ class JPanel04 extends JPanel {
 
 	private JScrollPane jScrollPane1;
 	private JTextArea jTextArea1;
-
-	void makeCombo() { // select 박스
-		JComboBox<String> c = new JComboBox();
-		c.setSize(500, 40);
-		c.setLocation(200, 385);
-//		c.addItem("data1"); // 데이터값 넣기
-		
-		SingleTon s =SingleTon.getInstanse();
+	SingleTon s =SingleTon.getInstanse();
+	JComboBox<String> c = new JComboBox();
+	
+	
+	////////////////	콤보박스에 값 넣기
+	void combo_loadData() {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -70,7 +68,6 @@ class JPanel04 extends JPanel {
 		
 				s.realstudytimeval = serialnum + "/" + studytime + "/" + date + "/"+ subject + "\n";
 				c.addItem(s.realstudytimeval);
-				add(c);
 			}
 	
 		} catch (Exception e1) {
@@ -89,16 +86,27 @@ class JPanel04 extends JPanel {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}
-//		add(c);
-		////   선택값 가져오기
+		}add(c);
+	}
+	////////////     삭제할 데이터 선택
+	void select_del() {
 		c.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				s.Delete_rst = c.getSelectedItem().toString();
+				if (c.getSelectedItem().toString() != null) {
+					s.Delete_rst = c.getSelectedItem().toString();
+				}
+				
+				
 			}
 		});
-
-
+	}
+	////////////////	콤보박스 만들기
+	void makeCombo() { // select 박스
+		
+		c.setSize(500, 40);
+		c.setLocation(200, 385);
+		combo_loadData();
+		select_del();
 
 	}
 
@@ -124,18 +132,32 @@ class JPanel04 extends JPanel {
 		makeCombo();
 
 		setLayout(null);
-
-		jButton1 = new JButton("UP LOADING");
+		
+		
+		ImageIcon imageForOne = new ImageIcon("image/button.png");
+		jButton1 = new JButton("",imageForOne);
 		jButton1.setSize(130, 40);
 		jButton1.setLocation(40, 240);
+		//
+		jButton1.setBorderPainted(false);
+	     //JButton의 Border(외곽선)을 없애준다.   
+		jButton1.setContentAreaFilled(false);
+	     //JButton의 내용영역 채루기 않함
+		jButton1.setFocusPainted(false);
 		add(jButton1);
 		//
 		jButton1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				makeCombo();
+				
 				jTextArea1.setText("");
 				Select_RealStudyTime mR = new Select_RealStudyTime();
-				mR.loadRealStudyTime(jTextArea1);
+				int countnum = mR.loadRealStudyTime(jTextArea1);
+				if(countnum == 1)
+				{
+					System.out.println("count num ==1");
+//					makeCombo();
+				}
 			}
 		});
 		//
@@ -149,21 +171,22 @@ class JPanel04 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//
 				try {
-					s.get_textfield_realstudy_ = jtextfield1.getText();
-					System.out.println(s.get_textfield_realstudy_);
-					jTextArea1.append(s.get_textfield_realstudy_+"\n");
+					s.get_textfield_realstudy = jtextfield1.getText();
+					System.out.println(s.get_textfield_realstudy);
+					jTextArea1.append(s.get_textfield_realstudy+"\n");
 					jtextfield1.setText(null);
-					//
-					jTextArea1.setText("");
-//	        	 s.Insert_sst = "2,3,2020-02-11,3";
-					String[] array = s.get_textfield_realstudy_.split("/");
+					String[] array = s.get_textfield_realstudy.split("/");
 					String serialNum = array[0];
 					String studytime = array[1];
 					String date = array[2];
 					String subject = array[3];
 
 					Insert_RealStudyTime.insert(serialNum, studytime, date, subject, jTextArea1);
-
+					c.addItem(s.get_textfield_realstudy);
+					//
+//					c.revalidate();
+//					c.repaint(); 
+					
 				} catch (Exception e2) {
 					// TODO: handle exception
 					jTextArea1.append("실패했습니다. 값을 다시 한번 확인해 주세요.");
@@ -181,14 +204,32 @@ class JPanel04 extends JPanel {
 		jButton3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jTextArea1.setText("");
-//				s.Delete_rst = "2,3,2020-02-11,3";
-				String[] array = s.Delete_rst.split("/");
-				String serialNum = array[0];
-				String studytime = array[1];
-				String date = array[2];
-				String subject = array[3];
-
-				Delete_RealStudyTime.delete(serialNum, studytime, date, subject, jTextArea1);
+//				c.removeAllItems();
+//				combo_loadData();
+				select_del();
+				System.out.println(s.Delete_rst);
+				if(s.Delete_rst != null) {
+					String[] array = s.Delete_rst.split("/");
+					String serialNum = array[0];
+					String studytime = array[1];
+					String date = array[2];
+					String subject = array[3];
+	
+					Delete_RealStudyTime.delete(serialNum, studytime, date, subject, jTextArea1);
+					/////////////////////
+					c.removeItem(s.Delete_rst);
+					
+					if(c.getItemAt(0) ==null)
+					{
+						System.out.println("c.removeAllItems()");
+//						c.removeAllItems();
+					}
+				}
+				else {
+					System.out.println("삭제할 값이 없습니다.");
+					c.removeAll();
+//					remove(c);
+				}
 			}
 		});
 		//

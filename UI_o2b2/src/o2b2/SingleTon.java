@@ -36,7 +36,7 @@ public class SingleTon {
 	JTextField textfield;
 	JButton btn_textField;
 	String get_textfield_profile = null;
-	String get_textfield_realstudy_ = null;
+	String get_textfield_realstudy = null;
 	String get_textfield_schedulestudy = null;
 	
 	JTextArea txta1;

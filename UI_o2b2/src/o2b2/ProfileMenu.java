@@ -29,13 +29,13 @@ class JPanel02 extends JPanel{
     private JTextField jtextfield1;
     private JScrollPane jScrollPane1;
     private JTextArea jTextArea1;
-    
+	JComboBox<String> c = new JComboBox();
 
     void makeCombo() {  // select 박스
     	Connection conn = null;
     	Statement stmt = null;
 		ResultSet rs = null;
-    	JComboBox<String> c = new JComboBox();
+
         c.setSize(500,40);        
         c.setLocation(200, 385);
 
@@ -148,7 +148,8 @@ class JPanel02 extends JPanel{
 				String phonenum = array[1];
 				String password1 = array[2];
 				Insert_Profile.insert(serialnum, phonenum, password1, jTextArea1);
-			} catch (Exception e2) {
+				c.addItem(s.get_textfield_profile);
+           	} catch (Exception e2) {
 				// TODO: handle exception
 				jTextArea1.append("실패했습니다. 값을 다시 한번 확인해 주세요.");
 			}
@@ -171,6 +172,7 @@ class JPanel02 extends JPanel{
            	 String delphonenum = array[1];
 //           	 String delpassword = array[2];
            	 Delete_Profile.delete(delphonenum, /*delpassword,*/ jTextArea1);
+           	c.removeItem(s.Delete_pro);
             }
          });
         //

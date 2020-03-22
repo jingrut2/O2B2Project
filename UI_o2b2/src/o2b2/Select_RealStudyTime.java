@@ -68,7 +68,7 @@ public void loadRealStudyTime() {
 	
 	
 	
-	public void loadRealStudyTime(JTextArea txtArea) {
+	public int loadRealStudyTime(JTextArea txtArea) {
 		
 		SingleTon s =SingleTon.getInstanse();
 		
@@ -76,7 +76,7 @@ public void loadRealStudyTime() {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-	
+		int count =0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3309/o2b2", "root", "1234");
@@ -101,7 +101,7 @@ public void loadRealStudyTime() {
 		
 				realstudytimeval = serialnum + " / " + studytime + " / " + date + " / "+ subject + "\n";
 				txtArea.append(realstudytimeval);
-				
+				count++;
 			}
 	
 		} catch (Exception e1) {
@@ -121,5 +121,6 @@ public void loadRealStudyTime() {
 				e1.printStackTrace();
 			}
 		}
+		return 0;
 	}
 }

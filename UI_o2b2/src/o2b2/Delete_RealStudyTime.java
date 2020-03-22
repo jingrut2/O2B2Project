@@ -25,16 +25,15 @@ public static void delete(String serialnum ,String studytime , String date, Stri
 		pstmt.setString(3, date);
 		pstmt.setString(4, subject);
 		
-		
-		
-		int count = pstmt.executeUpdate();
-		if (count == 0) {
-			System.out.println("변경된 row: "+ count);
-			txtArea.append("삭제할 값을 다시한번 확인해 주세요.\n");
-		}else {
-			System.out.println("데이터 입력 성공");
-			txtArea.append("삭제 되었습니다.\n");
-		}
+		pstmt.executeUpdate();
+		txtArea.append("삭제 되었습니다.\n");
+//		if (count == 0) {
+//			System.out.println("변경된 row: "+ count);
+//			txtArea.append("삭제할 값을 다시한번 확인해 주세요.\n");
+//		}else {
+//			System.out.println("데이터 입력 성공");
+//			
+//		}
 		
 
 	} catch (Exception e) {
