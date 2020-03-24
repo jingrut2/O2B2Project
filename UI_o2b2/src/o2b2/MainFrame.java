@@ -1,13 +1,14 @@
 package o2b2;
 
-
 public class MainFrame {
 		
 		public static void main(String [] args) {
 			
+
 			new MainSetting();
-			new MenuBar();
-			
+			o2b2.MenuBar mb  = o2b2.MenuBar.getIntance();
+			mb.MenuBar();
+
 			And_Server mAnd_Server = new And_Server();
 			mAnd_Server.start();
 			
